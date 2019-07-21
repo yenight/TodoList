@@ -1,17 +1,25 @@
 .mainBox {
     margin: 0 auto;
+    padding: 0;
     width: 40%;
-    height: 400px;
+    height: 100%;
     background-color: #F0F0F0;
     border: 1px;
     border-radius: 30px;
+    overflow: hidden;
 }
 
-.mainBox h1 {
+.todoListBox {
+    position:relative;
+    width: 100%;
+    height: 40%;
+}
+
+.todoListBox h1 {
     padding-top: 30px;
 }
 
-.mainBox button {
+.todoListBox button {
     margin-left: 10px;
     border: 1px;
     border-radius: 10px;
@@ -21,6 +29,23 @@
     color: white;
 }
 
-.mainBox input {
+.todoListBox input[type=text] {
     width: 45%;
+    height: 30px;
+}
+
+.todoItemsBox {
+    margin-left: 110px;
+    margin-top: 10px;
+    font-size: 1.5em;
+    text-align: left;
+    width: 100%;
+    min-height: 30px;
+    height: auto !important;
+    float: left;
+}
+
+.todoItemsBox input[type=checkbox] {
+    width: 20px;
+    height: 20px;
 }

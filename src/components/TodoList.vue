@@ -1,9 +1,15 @@
 <template>
     <div class="mainBox">
-        <h1>{{msg}}</h1>
-        <p>Simple Todo List with adding and filter by diff status</p>
-        <input type="text" v-model="inputText"/>
-        <button @click="clickAddButton">add</button>
+        <div class="todoListBox">
+            <h1>{{msg}}</h1>
+            <p>Simple Todo List with adding and filter by diff status</p>
+            <input type="text" v-model="inputText"/>
+            <button @click="clickAddButton">add</button>
+        </div>
+        <div v-for="item in todoItems" :key="item.index" class="todoItemsBox">
+            {{item.index}}.
+            <input type="checkbox" :value="item.index">{{item.text}}
+        </div>
     </div>
 </template>
 
@@ -15,12 +21,17 @@
         },
         data: function () {
             return {
-                inputText: ""
+                inputText: "",
+                todoItems: [],
+                itemIndex: 0
             }
         },
         methods: {
-            clickAddButton: () => {
-
+            clickAddButton: function() {
+                this.todoItems.push({
+                    text: this.inputText,
+                    index: ++this.itemIndex
+                })
             }
         }
     }
