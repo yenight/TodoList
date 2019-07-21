@@ -49,3 +49,30 @@
     width: 20px;
     height: 20px;
 }
+
+.todoItemIndex {
+    width: 10%;
+    float: left;
+}
+
+.todoItem {
+    float: left;
+    width: 80%;
+}
+
+.todoItemWithColor {
+    float: left;
+    width: 80%;
+    background-color: #FFCC99;
+}
+
+.selectBox {
+    margin-top: 10px;
+}
+
+.selectBox a {
+    margin-right: 30px;
+    font-size: 1.4em;
+    color: #CC3333;
+}
+
