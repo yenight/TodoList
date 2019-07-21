@@ -6,7 +6,7 @@
             <input type="text" v-model="inputText"/>
             <button @click="clickAddButton">add</button>
         </div>
-        <div v-for="item in todoItems" :key="item.index" class="todoItemsBox">
+        <div v-for="item in todoItems" :key="item.index" class="todoItemsBox" v-show="item.isShow">
             <div class="todoItemIndex">
                 {{item.index}}.
             </div>
@@ -58,20 +58,27 @@
             clickAddButton: function() {
                 this.todoItems.push({
                     text: this.inputText,
-                    index: ++this.itemIndex
+                    index: ++this.itemIndex,
+                    isShow: true
                 })
                 this.styleObject.push({
                     textDecoration: 'none'
                 })
             },
             clickAll: function () {
-                //console.log("1")
+                for (let i = 0; i < this.todoItems.length; i++) {
+                    this.todoItems[i].isShow = true
+                }
             },
             clickActive: function () {
-                //console.log("2")
+                for (let i = 0; i < this.styleObject.length; i++) {
+                    this.todoItems[i].isShow = this.styleObject[i].textDecoration === 'none'
+                }
             },
             clickComplete: function () {
-                //console.log("3")
+                for (let i = 0; i < this.styleObject.length; i++) {
+                    this.todoItems[i].isShow = this.styleObject[i].textDecoration === 'line-through'
+                }
             }
         }
     }
