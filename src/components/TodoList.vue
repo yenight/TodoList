@@ -6,9 +6,9 @@
             <input type="text" v-model="inputText"/>
             <button @click="clickAddButton">add</button>
         </div>
-        <div v-for="item in todoItems" :key="item.index" class="todoItemsBox" v-show="item.isShow">
+        <div v-for="(item,index) in showItems" :key="item.index" class="todoItemsBox">
             <div class="todoItemIndex">
-                {{item.index}}.
+                {{index + 1}}.
             </div>
             <div class="todoItem" v-if="item.index %2 !== 0" :style="styleObject[item.index - 1]">
                 <input type="checkbox" :value="item.index" v-model="checkIndexs">
@@ -54,6 +54,13 @@
                 }
             }
         },
+        computed: {
+            showItems: function () {
+                return this.todoItems.filter(function (item) {
+                    return item.isShow
+                })
+            }
+        },
         methods: {
             clickAddButton: function() {
                 this.todoItems.push({
@@ -66,16 +73,19 @@
                 })
             },
             clickAll: function () {
+                console.log(this.todoItems)
                 for (let i = 0; i < this.todoItems.length; i++) {
                     this.todoItems[i].isShow = true
                 }
             },
             clickActive: function () {
+                console.log("acitive")
                 for (let i = 0; i < this.styleObject.length; i++) {
                     this.todoItems[i].isShow = this.styleObject[i].textDecoration === 'none'
                 }
             },
             clickComplete: function () {
+                console.log(this.styleObject)
                 for (let i = 0; i < this.styleObject.length; i++) {
                     this.todoItems[i].isShow = this.styleObject[i].textDecoration === 'line-through'
                 }
