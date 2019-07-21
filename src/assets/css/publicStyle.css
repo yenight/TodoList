@@ -19,6 +19,10 @@
     padding-top: 30px;
 }
 
+.todoListBox p {
+    font-style:italic;
+}
+
 .todoListBox button {
     margin-left: 10px;
     border: 1px;
@@ -64,6 +68,10 @@
     float: left;
     width: 80%;
     background-color: #FFCC99;
+}
+
+.itemTextWithLine {
+    text-decoration: line-through;
 }
 
 .selectBox {

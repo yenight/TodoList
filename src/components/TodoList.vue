@@ -10,11 +10,13 @@
             <div class="todoItemIndex">
                 {{item.index}}.
             </div>
-            <div class="todoItem" v-if="item.index %2 !== 0">
-                <input type="checkbox" :value="item.index">{{item.text}}
+            <div class="todoItem" v-if="item.index %2 !== 0" :style="styleObject[item.index - 1]">
+                <input type="checkbox" :value="item.index" v-model="checkIndexs">
+                <span>{{item.text}}</span>
             </div>
-            <div class="todoItemWithColor" v-else>
-                <input type="checkbox" :value="item.index">{{item.text}}
+            <div class="todoItemWithColor" v-else :style="styleObject[item.index - 1]">
+                <input type="checkbox" :value="item.index" v-model="checkIndexs">
+                <span>{{item.text}}</span>
             </div>
         </div>
         <div class="selectBox">
@@ -35,7 +37,21 @@
             return {
                 inputText: "",
                 todoItems: [],
-                itemIndex: 0
+                itemIndex: 0,
+                checkIndexs: [],
+                styleObject: []
+            }
+        },
+        watch: {
+            checkIndexs: function (newValue, oldValue) {
+                for (let i = 0; i < newValue.length; i++) {
+                    this.styleObject[newValue[i] - 1].textDecoration = 'line-through'
+                }
+                for (let i = 0; i < oldValue.length; i++) {
+                    if (newValue.indexOf(oldValue[i]) < 0) {
+                        this.styleObject[oldValue[i] - 1].textDecoration = 'none'
+                    }
+                }
             }
         },
         methods: {
@@ -43,6 +59,9 @@
                 this.todoItems.push({
                     text: this.inputText,
                     index: ++this.itemIndex
+                })
+                this.styleObject.push({
+                    textDecoration: 'none'
                 })
             },
             clickAll: function () {
