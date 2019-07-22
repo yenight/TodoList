@@ -28,9 +28,6 @@
                 })
             }
         },
-        watch: {
-
-        },
         data: function () {
             return {
 

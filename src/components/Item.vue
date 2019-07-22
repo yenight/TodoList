@@ -1,9 +1,12 @@
 <template>
     <div>
-        <input type="checkbox" :value="item.index" v-model="checkIndexes">
-        <span v-if="!item.isEdited && item.isSelected === false" @dblclick="editText(item.index)">{{item.text}}</span>
-        <del v-else-if="!item.isEdited && item.isSelected === true" @dblclick="editText(item.index)">{{item.text}}</del>
-        <input type="text" v-focus @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
+        <Checkbox v-model="item.isSelected" @on-change="changeSelectedBox">
+            <span v-if="!item.isEdited && item.isSelected === false" @dblclick="editText(item.index)">{{item.text}}</span>
+            <del v-else-if="!item.isEdited && item.isSelected === true" @dblclick="editText(item.index)">{{item.text}}</del>
+            <input type="text" v-focus @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
+        </Checkbox>
+        <!--<input type="checkbox" :value="item.index" v-model="checkIndexes" @change="changeSelectedBox(item)">-->
+
     </div>
 </template>
 
@@ -23,18 +26,8 @@
         },
         data: function () {
             return {
-                editedText: '',
-                checkIndexes: []
-            }
-        },
-        watch: {
-            checkIndexes: function (newValue, oldValue) {
-                if (newValue[0] !== undefined) {
-                    this.$store.commit('changeItemSelected', {
-                        index: newValue[0] - 1,
-                        isSelected: true
-                    })
-                }
+                editedText: ''
+
             }
         },
         methods: {
@@ -53,6 +46,19 @@
                     text: this.editedText
                 })
                 this.editedText = ''
+            },
+            changeSelectedBox: function (data) {
+                if (data) {
+                    this.$store.commit('changeItemSelected', {
+                        index: this.item.index - 1,
+                        isSelected: true
+                    })
+                } else {
+                    this.$store.commit('changeItemSelected', {
+                        index: this.item.index - 1,
+                        isSelected: false
+                    })
+                }
             }
         }
     }
