@@ -1,10 +1,9 @@
 <template>
     <div>
-        <Checkbox v-model="item.isSelected" @on-change="changeSelectedBox">
-            <span v-if="!item.isEdited && item.isSelected === false" @dblclick="editText(item.index)">{{item.text}}</span>
-            <del v-else-if="!item.isEdited && item.isSelected === true" @dblclick="editText(item.index)">{{item.text}}</del>
-            <input type="text" v-focus @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
-        </Checkbox>
+        <Checkbox v-model="item.isSelected" @on-change="changeSelectedBox"></Checkbox>
+        <span v-if="!item.isEdited && item.isSelected === false" @dblclick="editText(item.index)">{{item.text}}</span>
+        <del v-else-if="!item.isEdited && item.isSelected === true" @dblclick="editText(item.index)">{{item.text}}</del>
+        <input type="text" v-focus @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
         <!--<input type="checkbox" :value="item.index" v-model="checkIndexes" @change="changeSelectedBox(item)">-->
 
     </div>
@@ -32,11 +31,13 @@
         },
         methods: {
             editText: function(index) {
-                this.$store.commit('editItem', {
-                    index: index - 1,
-                    isEdited: true
-                })
-                this.editedText = this.$store.state.todoItems[index - 1].text;
+                if (!this.item.isSelected) {
+                    this.$store.commit('editItem', {
+                        index: index - 1,
+                        isEdited: true
+                    })
+                    this.editedText = this.$store.state.todoItems[index - 1].text;
+                }
 
             },
             submitText: function (index) {
