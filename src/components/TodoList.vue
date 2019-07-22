@@ -10,15 +10,15 @@
             <div class="todoItemIndex">
                 {{index + 1}}.
             </div>
-            <div class="todoItem" v-if="item.index %2 !== 0" :style="styleObject[item.index - 1]">
+            <div class="todoItem" v-if="(index+1) %2 !== 0" :style="styleObject[item.index - 1]">
                 <input type="checkbox" :value="item.index" v-model="checkIndexs">
                 <span v-if="!item.isEdited" @dblclick="editText(item.index)">{{item.text}}</span>
-                <input type="text" @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
+                <input type="text" v-focus @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
             </div>
             <div class="todoItemWithColor" v-else :style="styleObject[item.index - 1]">
                 <input type="checkbox" :value="item.index" v-model="checkIndexs">
                 <span v-if="!item.isEdited" @dblclick="editText(item.index)">{{item.text}}</span>
-                <input type="text" @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
+                <input type="text" v-focus @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
             </div>
         </div>
         <div class="selectBox">
@@ -32,6 +32,14 @@
 <script>
     export default {
         name: "TodoList",
+        directives: {
+            focus: {
+                // 指令的定义
+                inserted: function (el) {
+                    el.focus()
+                }
+            }
+        },
         props: {
             msg: String
         },
@@ -42,7 +50,8 @@
                 itemIndex: 0,
                 checkIndexs: [],
                 styleObject: [],
-                editedText: ''
+                editedText: '',
+                selectedButtonName: 'All'
             }
         },
         watch: {
@@ -77,22 +86,27 @@
                 })
             },
             clickAll: function () {
+                this.selectedButtonName = 'All'
                 for (let i = 0; i < this.todoItems.length; i++) {
                     this.todoItems[i].isShow = true
                 }
             },
             clickActive: function () {
+                this.selectedButtonName = 'Active'
                 for (let i = 0; i < this.styleObject.length; i++) {
                     this.todoItems[i].isShow = this.styleObject[i].textDecoration === 'none'
                 }
             },
             clickComplete: function () {
+                this.selectedButtonName = 'Complete'
                 for (let i = 0; i < this.styleObject.length; i++) {
                     this.todoItems[i].isShow = this.styleObject[i].textDecoration === 'line-through'
                 }
             },
             editText: function(index) {
                 this.todoItems[index - 1].isEdited = true;
+                this.editedText = this.todoItems[index - 1].text;
+
             },
             submitText: function (index) {
                 this.todoItems[index - 1].text = this.editedText
