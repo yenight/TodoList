@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="itemBox">
         <div v-for="(item,index) in showItems" :key="index + 1" class="todoItemsBox">
             <div class="todoItemIndex">
                 {{index + 1}}.

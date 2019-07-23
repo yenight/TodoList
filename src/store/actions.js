@@ -31,22 +31,22 @@ const actions = {
                 .catch(error => reject(error))
         })
     },
-    changeItemShowStatus ({ commit }, payload) {
-        return new Promise( (resolve, reject) => {
-            axios.patch(`/todos/${payload.id}`, payload.data)
-                .then(response => {
-                    commit('changeItemSelected', response.data)
-                    resolve('update success')
-                })
-                .catch(error => reject(error))
-        })
-    },
     submitText ({ commit }, payload) {
         return new Promise( (resolve, reject) => {
             axios.patch(`/todos/${payload.id}`, payload.data)
                 .then(response => {
                     commit('submitText', response.data)
                     resolve('update success')
+                })
+                .catch(error => reject(error))
+        })
+    },
+    deleteItem ({commit}, payload) {
+        return new Promise( (resolve, reject) => {
+            axios.delete(`/todos/${payload.id}`)
+                .then(response => {
+                    commit('deleteItem', payload)
+                    resolve('delete success')
                 })
                 .catch(error => reject(error))
         })

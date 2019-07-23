@@ -17,6 +17,9 @@ const mutations = {
     changeSelectButtonName (state, payload) {
         state.currentTab = payload.currentTab
     },
+    deleteItem (state, payload) {
+        state.todoItems.splice(payload.id - 1, 1)
+    }
 }
 
 export default mutations

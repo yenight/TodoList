@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="addTodo">
         <input type="text" v-model="inputText"/>
         <button @click="clickAddButton">add</button>
     </div>

@@ -1,0 +1,30 @@
+<template>
+    <div class="main-div">
+        <p>TodoLists</p>
+        <div class="main-div-input">
+            name: <Input placeholder="please input your name" v-model="textValue" style="width: 70%"/>
+        </div>
+        <div class="main-div-button">
+            <Button @click="clickStarted"  type="primary">begin start</Button>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "Main",
+        data: function() {
+            return {
+                textValue: ''
+            }
+        },
+        methods: {
+            clickStarted: function () {
+                this.$router.push({path: 'home', query: {name: this.textValue}})
+            }
+        }
+    }
+</script>
+
+<style>
+</style>

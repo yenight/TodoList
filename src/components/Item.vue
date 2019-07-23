@@ -4,6 +4,14 @@
         <span v-if="!isEdited && item.isSelected === false" @dblclick="editText(item.id)">{{item.text}}</span>
         <del v-else-if="!isEdited && item.isSelected === true" @dblclick="editText(item.id)">{{item.text}}</del>
         <input type="text" v-focus @keyup.enter="submitText(item.id)" v-else v-model="editedText"/>
+        <Button type="error" @click="deleteItem" style="float: right;">delete</Button>
+        <Modal
+                v-model="modalValue"
+                title="Warning"
+                :mask-closable="false"
+                @on-ok="modalOk">
+            <p>Do you want to delete this item?</p>
+        </Modal>
     </div>
 </template>
 
@@ -24,7 +32,8 @@
         data: function () {
             return {
                 editedText: '',
-                isEdited: false
+                isEdited: false,
+                modalValue: false
             }
         },
         methods: {
@@ -44,23 +53,35 @@
             changeSelectedBox: function (data) {
                 if (data) {
                     this.$store.dispatch('changeItemSelected', {id: this.item.id, data: {isSelected: true}})
-                        .then(response => console.log(response))
+                        .then(response => {})
                         .catch(error => console.log(error))
                     if (this.$store.state.currentTab === 'Active') {
-                        this.$store.dispatch('changeItemShowStatus', {id: this.item.index - 1, data: {isShow: false}})
-                            .then(response => console.log(response))
-                            .catch(error => console.log(error))
+                        const self = this
+                        this.$nextTick(function () {
+                            self.$store.commit('changeItemShowStatus', {id: self.item.id, isShow: false})
+                        })
+
                     }
                 } else {
                     this.$store.dispatch('changeItemSelected', {id: this.item.id, data: {isSelected: false}})
                         .then(response => console.log(response))
                         .catch(error => console.log(error))
                     if (this.$store.state.currentTab === 'Complete') {
-                        this.$store.dispatch('changeItemShowStatus', {id: this.item.id, data: {isShow: false}})
-                            .then(response => console.log(response))
-                            .catch(error => console.log(error))
+                        const self = this
+                        this.$nextTick(function () {
+                            self.$store.commit('changeItemShowStatus', {id: self.item.id, isShow: false})
+                        })
+
                     }
                 }
+            },
+            deleteItem: function () {
+                this.modalValue = true
+            },
+            modalOk: function () {
+                this.$store.dispatch('deleteItem', {id: this.item.id})
+                    .then(response => console.log(response))
+                    .catch(error => console.log(error))
             }
         }
     }

@@ -26,6 +26,5 @@
     }
 </script>
 
-<style>
-@import "../assets/css/publicStyle.css";
+<style scoped>
 </style>
