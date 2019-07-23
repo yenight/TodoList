@@ -8,15 +8,11 @@ const mutations = {
     changeItemSelected (state, payload) {
         state.todoItems[payload.index].isSelected = payload.isSelected
     },
-    editItem (state, payload) {
-        state.todoItems[payload.index].isEdited = payload.isEdited
-    },
     submitText (state, payload) {
-        state.todoItems[payload.index].isEdited = payload.isEdited
         state.todoItems[payload.index].text = payload.text
     },
     changeSelectButtonName (state, payload) {
-        state.selectedButtonName = payload.selectedButtonName
+        state.currentTab = payload.currentTab
     }
 }
 

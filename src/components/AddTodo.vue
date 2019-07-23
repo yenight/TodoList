@@ -1,7 +1,5 @@
 <template>
-    <div class="todoListBox">
-        <h1>{{title}}</h1>
-        <p>Simple Todo List with adding and filter by diff status</p>
+    <div>
         <input type="text" v-model="inputText"/>
         <button @click="clickAddButton">add</button>
     </div>
@@ -9,10 +7,9 @@
 
 <script>
     export default {
-        name: "TodoListHead",
+        name: "AddTodo",
         data: function () {
             return {
-                title: 'jQuery To Do List',
                 inputText: '',
                 itemIndex: 0,
             }
@@ -24,7 +21,6 @@
                         text: this.inputText,
                         index: ++this.itemIndex,
                         isShow: true,
-                        isEdited: false,
                         isSelected: false
                     }
                 })

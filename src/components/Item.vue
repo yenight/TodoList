@@ -1,11 +1,9 @@
 <template>
     <div>
         <Checkbox v-model="item.isSelected" @on-change="changeSelectedBox"></Checkbox>
-        <span v-if="!item.isEdited && item.isSelected === false" @dblclick="editText(item.index)">{{item.text}}</span>
-        <del v-else-if="!item.isEdited && item.isSelected === true" @dblclick="editText(item.index)">{{item.text}}</del>
+        <span v-if="!isEdited && item.isSelected === false" @dblclick="editText(item.index)">{{item.text}}</span>
+        <del v-else-if="!isEdited && item.isSelected === true" @dblclick="editText(item.index)">{{item.text}}</del>
         <input type="text" v-focus @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
-        <!--<input type="checkbox" :value="item.index" v-model="checkIndexes" @change="changeSelectedBox(item)">-->
-
     </div>
 </template>
 
@@ -25,25 +23,21 @@
         },
         data: function () {
             return {
-                editedText: ''
-
+                editedText: '',
+                isEdited: false
             }
         },
         methods: {
             editText: function(index) {
                 if (!this.item.isSelected) {
-                    this.$store.commit('editItem', {
-                        index: index - 1,
-                        isEdited: true
-                    })
+                    this.isEdited = true
                     this.editedText = this.$store.state.todoItems[index - 1].text;
                 }
-
             },
             submitText: function (index) {
+                this.isEdited = false
                 this.$store.commit('submitText', {
                     index: index - 1,
-                    isEdited: false,
                     text: this.editedText
                 })
                 this.editedText = ''
@@ -54,7 +48,7 @@
                         index: this.item.index - 1,
                         isSelected: true
                     })
-                    if (this.$store.state.selectedButtonName === 'Active') {
+                    if (this.$store.state.currentTab === 'Active') {
                         this.$store.commit('changeItemShowStatus', {
                             index: this.item.index - 1,
                             isShow: false
@@ -65,7 +59,7 @@
                         index: this.item.index - 1,
                         isSelected: false
                     })
-                    if (this.$store.state.selectedButtonName === 'Complete') {
+                    if (this.$store.state.currentTab === 'Complete') {
                         this.$store.commit('changeItemShowStatus', {
                             index: this.item.index - 1,
                             isShow: false

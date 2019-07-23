@@ -1,6 +1,6 @@
 const state = {
     todoItems: [],
-    selectedButtonName: ''
+    currentTab: ''
 }
 
 export default state

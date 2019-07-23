@@ -1,18 +1,20 @@
 <template>
     <div class="mainBox">
-        <TodoListHead></TodoListHead>
+        <TodoTitle></TodoTitle>
+        <AddTodo></AddTodo>
         <TodoItem></TodoItem>
-        <TodoListFilterButton></TodoListFilterButton>
+        <TabGroup></TabGroup>
     </div>
 </template>
 
 <script>
-    import TodoListHead from './TodoListHead'
-    import TodoItem from './TodoItem'
-    import TodoListFilterButton from './TodoListFilterButton'
+    import TodoTitle from './TodoTitle'
+    import TodoItem from './TodoItems'
+    import TabGroup from './TabGroup'
+    import AddTodo from "./AddTodo";
     export default {
         name: "TodoList",
-        components: {TodoListFilterButton, TodoItem, TodoListHead},
+        components: {AddTodo, TabGroup, TodoItem, TodoTitle},
         data: function () {
             return {
 
