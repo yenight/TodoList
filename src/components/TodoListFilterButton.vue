@@ -16,7 +16,7 @@
         },
         methods: {
             clickAll: function () {
-                this.selectedButtonName = 'All'
+                this.$store.commit('changeSelectButtonName', {selectedButtonName: 'All'})
                 for (let i = 0; i < this.$store.state.todoItems.length; i++) {
                     this.$store.commit('changeItemShowStatus', {
                         index: i,
@@ -25,7 +25,7 @@
                 }
             },
             clickActive: function () {
-                this.selectedButtonName = 'Active'
+                this.$store.commit('changeSelectButtonName', {selectedButtonName: 'Active'})
                 for (let i = 0; i < this.$store.state.todoItems.length; i++) {
                     this.$store.commit('changeItemShowStatus', {
                         index: i,
@@ -34,7 +34,7 @@
                 }
             },
             clickComplete: function () {
-                this.selectedButtonName = 'Complete'
+                this.$store.commit('changeSelectButtonName', {selectedButtonName: 'Complete'})
                 for (let i = 0; i < this.$store.state.todoItems.length; i++) {
                     this.$store.commit('changeItemShowStatus', {
                         index: i,

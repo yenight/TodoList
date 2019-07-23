@@ -1,6 +1,6 @@
 const state = {
     todoItems: [],
-    selectedItems: []
+    selectedButtonName: ''
 }
 
 export default state

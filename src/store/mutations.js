@@ -14,6 +14,9 @@ const mutations = {
     submitText (state, payload) {
         state.todoItems[payload.index].isEdited = payload.isEdited
         state.todoItems[payload.index].text = payload.text
+    },
+    changeSelectButtonName (state, payload) {
+        state.selectedButtonName = payload.selectedButtonName
     }
 }
 

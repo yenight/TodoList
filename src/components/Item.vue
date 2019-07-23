@@ -54,11 +54,23 @@
                         index: this.item.index - 1,
                         isSelected: true
                     })
+                    if (this.$store.state.selectedButtonName === 'Active') {
+                        this.$store.commit('changeItemShowStatus', {
+                            index: this.item.index - 1,
+                            isShow: false
+                        })
+                    }
                 } else {
                     this.$store.commit('changeItemSelected', {
                         index: this.item.index - 1,
                         isSelected: false
                     })
+                    if (this.$store.state.selectedButtonName === 'Complete') {
+                        this.$store.commit('changeItemShowStatus', {
+                            index: this.item.index - 1,
+                            isShow: false
+                        })
+                    }
                 }
             }
         }
