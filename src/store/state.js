@@ -1,6 +1,7 @@
 const state = {
     todoItems: [],
-    currentTab: ''
+    currentTab: '',
+    isShows: []
 }
 
 export default state

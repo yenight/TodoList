@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="(item,index) in showItems" :key="item.index" class="todoItemsBox">
+        <div v-for="(item,index) in showItems" :key="index + 1" class="todoItemsBox">
             <div class="todoItemIndex">
                 {{index + 1}}.
             </div>
@@ -18,6 +18,11 @@
     import Item from './Item'
     export default {
         name: "TodoItem",
+        mounted: function (){
+            this.$store.dispatch('getTodoItems')
+                .then(response => console.log(response))
+                .catch(error => console.log(error))
+        },
         components: {
             Item
         },

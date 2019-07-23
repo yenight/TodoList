@@ -18,17 +18,14 @@
             clickAll: function () {
                 this.$store.commit('changeSelectButtonName', {currentTab: 'All'})
                 for (let i = 0; i < this.$store.state.todoItems.length; i++) {
-                    this.$store.commit('changeItemShowStatus', {
-                        index: i,
-                        isShow: true
-                    })
+                    this.$store.commit('changeItemShowStatus', {id: i + 1, isShow: true})
                 }
             },
             clickActive: function () {
                 this.$store.commit('changeSelectButtonName', {currentTab: 'Active'})
                 for (let i = 0; i < this.$store.state.todoItems.length; i++) {
                     this.$store.commit('changeItemShowStatus', {
-                        index: i,
+                        id: i + 1,
                         isShow: this.$store.state.todoItems[i].isSelected === false
                     })
                 }
@@ -37,7 +34,7 @@
                 this.$store.commit('changeSelectButtonName', {currentTab: 'Complete'})
                 for (let i = 0; i < this.$store.state.todoItems.length; i++) {
                     this.$store.commit('changeItemShowStatus', {
-                        index: i,
+                        id: i + 1,
                         isShow: this.$store.state.todoItems[i].isSelected === true
                     })
                 }

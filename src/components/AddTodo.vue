@@ -11,20 +11,22 @@
         data: function () {
             return {
                 inputText: '',
-                itemIndex: 0,
             }
         },
         methods: {
             clickAddButton: function() {
-                this.$store.commit('addTodoItem', {
-                    item: {
-                        text: this.inputText,
-                        index: ++this.itemIndex,
-                        isShow: true,
-                        isSelected: false
-                    }
-                })
-                this.inputText = ''
+                const item = {
+                    text: this.inputText,
+                    isShow: true,
+                    isSelected: false
+                }
+                const self = this
+                this.$store.dispatch('addTodoItem', {item: item})
+                    .then(response => {
+                        console.log(response)
+                        self.inputText = ''
+                    })
+                    .catch(error => console.log(error))
             },
         }
     }

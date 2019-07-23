@@ -1,9 +1,9 @@
 <template>
     <div>
         <Checkbox v-model="item.isSelected" @on-change="changeSelectedBox"></Checkbox>
-        <span v-if="!isEdited && item.isSelected === false" @dblclick="editText(item.index)">{{item.text}}</span>
-        <del v-else-if="!isEdited && item.isSelected === true" @dblclick="editText(item.index)">{{item.text}}</del>
-        <input type="text" v-focus @keyup.enter="submitText(item.index)" v-else v-model="editedText"/>
+        <span v-if="!isEdited && item.isSelected === false" @dblclick="editText(item.id)">{{item.text}}</span>
+        <del v-else-if="!isEdited && item.isSelected === true" @dblclick="editText(item.id)">{{item.text}}</del>
+        <input type="text" v-focus @keyup.enter="submitText(item.id)" v-else v-model="editedText"/>
     </div>
 </template>
 
@@ -28,42 +28,37 @@
             }
         },
         methods: {
-            editText: function(index) {
+            editText: function(id) {
                 if (!this.item.isSelected) {
                     this.isEdited = true
-                    this.editedText = this.$store.state.todoItems[index - 1].text;
+                    this.editedText = this.$store.state.todoItems[id - 1].text;
                 }
             },
-            submitText: function (index) {
+            submitText: function (id) {
+                const self = this
                 this.isEdited = false
-                this.$store.commit('submitText', {
-                    index: index - 1,
-                    text: this.editedText
-                })
-                this.editedText = ''
+                this.$store.dispatch('submitText', {id: id, data: {text: this.editedText}})
+                    .then(response => self.editedText = '')
+                    .catch(error => console.log(error))
             },
             changeSelectedBox: function (data) {
                 if (data) {
-                    this.$store.commit('changeItemSelected', {
-                        index: this.item.index - 1,
-                        isSelected: true
-                    })
+                    this.$store.dispatch('changeItemSelected', {id: this.item.id, data: {isSelected: true}})
+                        .then(response => console.log(response))
+                        .catch(error => console.log(error))
                     if (this.$store.state.currentTab === 'Active') {
-                        this.$store.commit('changeItemShowStatus', {
-                            index: this.item.index - 1,
-                            isShow: false
-                        })
+                        this.$store.dispatch('changeItemShowStatus', {id: this.item.index - 1, data: {isShow: false}})
+                            .then(response => console.log(response))
+                            .catch(error => console.log(error))
                     }
                 } else {
-                    this.$store.commit('changeItemSelected', {
-                        index: this.item.index - 1,
-                        isSelected: false
-                    })
+                    this.$store.dispatch('changeItemSelected', {id: this.item.id, data: {isSelected: false}})
+                        .then(response => console.log(response))
+                        .catch(error => console.log(error))
                     if (this.$store.state.currentTab === 'Complete') {
-                        this.$store.commit('changeItemShowStatus', {
-                            index: this.item.index - 1,
-                            isShow: false
-                        })
+                        this.$store.dispatch('changeItemShowStatus', {id: this.item.id, data: {isShow: false}})
+                            .then(response => console.log(response))
+                            .catch(error => console.log(error))
                     }
                 }
             }
