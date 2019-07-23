@@ -146,3 +146,19 @@
     height: 80%;
 }
 
+.myInfo-div {
+    margin: 300px auto;
+    width: 500px;
+}
+
+.myInfo-input-div {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.myInfo-input {
+    width: 70%;
+    margin-right: 10px;
+}
+
+

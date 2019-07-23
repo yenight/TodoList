@@ -17,9 +17,9 @@
             </Header>
             <Layout class="home-content">
                 <Sider hide-trigger class="home-sider">
-                    <Menu theme="light" active-name="1" style="height: 100%">
+                    <Menu theme="light" active-name="1" style="height: 100%" @on-select="selectMenuItem">
                         <MenuGroup title="Menu">
-                            <MenuItem name="1">
+                            <MenuItem name="1" >
                                 <Icon type="md-document" />
                                 TodoList
                             </MenuItem>
@@ -30,17 +30,17 @@
                         </MenuGroup>
                     </Menu>
                 </Sider>
-                <TodoList></TodoList>
+                <router-view></router-view>
             </Layout>
         </Layout>
     </div>
 </template>
 
 <script>
-    import TodoList from "./TodoList";
+    // import TodoList from "./TodoList";
     export default {
         name: "Home",
-        components: {TodoList},
+        // components: {TodoList},
         data: function () {
           return {
               modalValue: false,
@@ -48,7 +48,7 @@
           }
         },
         mounted: function () {
-            console.log(this.$route.query)
+            this.$router.push('/todo')
         },
         methods: {
             clickBack: function () {
@@ -60,6 +60,10 @@
             },
             modalCancel: function () {
                 console.log('666')
+            },
+            selectMenuItem(name) {
+                name === '1'? this.$router.push('/todo') : this.$router.push('/myInfo')
+
             }
         }
     }
