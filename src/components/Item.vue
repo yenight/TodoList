@@ -1,17 +1,10 @@
 <template>
     <div>
-        <Checkbox v-model="item.isSelected" @on-change="changeSelectedBox"></Checkbox>
+        <el-checkbox v-model="item.isSelected" @on-change="changeSelectedBox"></el-checkbox>
         <span v-if="!isEdited && item.isSelected === false" @dblclick="editText(item.id)">{{item.text}}</span>
         <del v-else-if="!isEdited && item.isSelected === true" @dblclick="editText(item.id)">{{item.text}}</del>
-        <input type="text" v-focus @keyup.enter="submitText(item.id)" v-else v-model="editedText"/>
-        <Button type="error" @click="deleteItem" style="float: right;">delete</Button>
-        <Modal
-                v-model="modalValue"
-                title="Warning"
-                :mask-closable="false"
-                @on-ok="modalOk">
-            <p>Do you want to delete this item?</p>
-        </Modal>
+        <el-input type="text" v-focus @keyup.enter.native="submitText(item.id)" v-else v-model="editedText"/>
+        <el-button type="error" @click="deleteItem" style="float: right;">delete</el-button>
     </div>
 </template>
 
@@ -40,7 +33,7 @@
             editText: function(id) {
                 if (!this.item.isSelected) {
                     this.isEdited = true
-                    this.editedText = this.$store.state.todoItems[id - 1].text;
+                    this.editedText = this.item.text;
                 }
             },
             submitText: function (id) {
@@ -76,12 +69,27 @@
                 }
             },
             deleteItem: function () {
-                this.modalValue = true
-            },
-            modalOk: function () {
-                this.$store.dispatch('deleteItem', {id: this.item.id})
-                    .then(response => console.log(response))
-                    .catch(error => console.log(error))
+                const self = this
+                this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$store.dispatch('deleteItem', {id: this.item.id})
+                        .then(response => {
+                            self.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                        })
+                        .catch(error => console.log(error))
+
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             }
         }
     }

@@ -1,11 +1,11 @@
 <template>
     <div class="myInfo-div">
-        <Avatar icon="ios-person" size="large" style="height: 100px; width: 100px"/>
+        <el-avatar :size="100" :src="circleUrl"></el-avatar>
         <div class="myInfo-input-div">
-            Name:<Input v-model="userName" class="myInfo-input"/>
+            Name:<el-input v-model="userName" class="myInfo-input"/>
         </div>
         <div class="myInfo-input-div">
-            Tel: <Input v-model="telphoneNumber" class="myInfo-input" />
+            Tel: <el-input v-model="telphoneNumber" class="myInfo-input" />
         </div>
     </div>
 </template>
@@ -17,7 +17,8 @@
             return {
                 modalValue: false,
                 userName: this.$route.params.name,
-                telphoneNumber: ''
+                telphoneNumber: '',
+                circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
             }
         }
     }

@@ -2,10 +2,10 @@
     <div class="main-div">
         <p>TodoLists</p>
         <div class="main-div-input">
-            name: <Input placeholder="please input your name" v-model="textValue" style="width: 70%"/>
+            name: <el-input placeholder="please input your name" v-model="textValue" style="width: 70%"/>
         </div>
         <div class="main-div-button">
-            <Button @click="clickStarted"  type="primary">begin start</Button>
+            <el-button @click="clickStarted"  type="primary">begin start</el-button>
         </div>
     </div>
 </template>
