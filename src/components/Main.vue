@@ -19,8 +19,8 @@
             }
         },
         methods: {
-            clickStarted: function () {
-                this.$router.push({path: 'home', query: {name: this.textValue}})
+                clickStarted: function () {
+                this.$router.push({name: 'todo', params: {userName: this.textValue}})
             }
         }
     }

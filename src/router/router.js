@@ -8,14 +8,16 @@ import myInfo from './../components/MyInformation'
 Vue.use(VueRouter)
 
 const routes = [
-    {path: '/main', component: Main},
+    {path: '/main', name: 'main', component: Main},
     {
         path: '/home',
+        name: 'home',
         component: Home,
         children: [
-            {path: '/todo', component: TodoList},
-            {path: '/myInfo', component: myInfo}
-        ]
+            {path: '/todo', name: 'todo', component: TodoList},
+            {path: '/myInfo', name: 'myInfo', component: myInfo}
+        ],
+        redirect: '/todo'
     }
 ]
 

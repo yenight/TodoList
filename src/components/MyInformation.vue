@@ -16,10 +16,10 @@
         data: function () {
             return {
                 modalValue: false,
-                userName: this.$route.query.name,
+                userName: this.$route.params.name,
                 telphoneNumber: ''
             }
-        },
+        }
     }
 </script>
 

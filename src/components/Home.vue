@@ -3,13 +3,6 @@
         <Layout class="home">
             <Header>
                 <Button @click="clickBack" type="primary" class="layout-header-button">返回</Button>
-                <Modal
-                        v-model="modalValue"
-                        title="Warning"
-                        @on-ok="modalOk"
-                        @on-cancel="modalCancel">
-                    <p>Do you want to exit?</p>
-                </Modal>
                 <div class="layout-header-user-div">
                     <Avatar icon="ios-person" size="large" />
                     User: {{userName}}
@@ -37,33 +30,35 @@
 </template>
 
 <script>
-    // import TodoList from "./TodoList";
     export default {
         name: "Home",
-        // components: {TodoList},
         data: function () {
           return {
               modalValue: false,
-              userName: this.$route.query.name
+              userName: this.$route.params.userName
           }
         },
-        mounted: function () {
-            this.$router.push('/todo')
+        mounted() {
+          console.log(this.$route.params)
         },
         methods: {
             clickBack: function () {
-                this.modalValue = true
-                //alert('Do you want to exit?', )
-            },
-            modalOk: function () {
-                this.$router.push('/main')
-            },
-            modalCancel: function () {
-                console.log('666')
+                this.$router.push({name: 'main'})
             },
             selectMenuItem(name) {
-                name === '1'? this.$router.push('/todo') : this.$router.push('/myInfo')
-
+                name === '1'? this.$router.push('/todo') : this.$router.push({name: 'myInfo', params: {name: this.userName}})
+            }
+        },
+        beforeRouteLeave (to, from , next) {
+            if (to.name === 'main') {
+                const answer = window.confirm('Do you really want to leave?')
+                if (answer) {
+                    next()
+                } else {
+                    next(false)
+                }
+            } else {
+                next(to.name)
             }
         }
     }
